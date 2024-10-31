@@ -3,6 +3,7 @@ const aoc = @import("aoc.zig");
 
 const DAYS = [_]type{
     @import("days/day_01.zig").Solution,
+    @import("days/day_02.zig").Solution,
 };
 
 pub fn main() !void {
