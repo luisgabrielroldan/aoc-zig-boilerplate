@@ -11,8 +11,8 @@ This boilerplate is designed to help you quickly set up and organize your soluti
 │   ├── main.zig        # Entry point for running solutions
 │   ├── aoc.zig         # Common utilities
 │   └── days
-│       ├── day_01.zig  # Solution for Day 1
-│       └── day_XX.zig  # Solution for Day XX (to be added)
+│       ├── day_01.zig  # Solution for Day 1 (Example provided);
+│       └── day_xx.zig  # Solution for Day XX (copy from this to start a new solution)
 ├── inputs
 │   ├── 01_input.txt    # Real input for Day1
 │   ├── 01_sample.txt # Sample input for Day 1
@@ -21,27 +21,36 @@ This boilerplate is designed to help you quickly set up and organize your soluti
 
 ## Adding solutions
 
-### 1. Create a new file for the day
+### 1. Create a new file for the day copying the day_xx.zig
+
 ```zig
 const std = @import("std");
 const aoc = @import("../aoc.zig");
 
-pub const Solution = aoc.Solution("XX", struct {
+// Change the day number. For example for day 2:
+pub const Solution = aoc.Solution("02" , struct {
+
+    // Input will be read from the file inputs/02_input.txt
+
     pub fn part1(allocator: std.mem.Allocator, input: [][]const u8) !usize {
         // Your Part 1 solution here
+        return answer;
     }
 
     pub fn part2(allocator: std.mem.Allocator, input: [][]const u8) !usize {
         // Your Part 2 solution here
+        return answer;
     }
 });
 
 test "part 1" {
+    // This test will read the sample input from inputs/02_sample-1.txt
     const result = try Solution.run_with_input(std.testing.allocator, aoc.Part.first, "sample-1");
     try std.testing.expectEqual(expected_result_part1, result);
 }
 
 test "part 2" {
+    // This test will read the sample input from inputs/02_sample-2.txt
     const result = try Solution.run_with_input(std.testing.allocator, aoc.Part.second, "sample-2");
     try std.testing.expectEqual(expected_result_part2, result);
 }
@@ -55,7 +64,7 @@ The second argument is a struct with two functions, `part1` and `part2`, which s
 ```zig
 const DAYS = [_]type{
     @import("days/day_01.zig").Solution,
-    @import("days/day_XX.zig").Solution, // <-- Add this line
+    @import("days/day_XX.zig").Solution, // <-- Add this line changing XX to the day number
 };
 
 ```
