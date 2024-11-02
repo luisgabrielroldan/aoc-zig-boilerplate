@@ -6,6 +6,7 @@ const DAYS = [_]type{
     @import("days/day_02.zig").Solution,
     @import("days/day_03.zig").Solution,
     @import("days/day_04.zig").Solution,
+    @import("days/day_05.zig").Solution,
 };
 
 pub fn main() !void {
