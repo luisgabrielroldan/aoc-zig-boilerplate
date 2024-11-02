@@ -17,19 +17,29 @@ pub fn Solution(comptime input_prefix: []const u8, comptime impl: type) type {
         }
 
         pub fn run_with_input(allocator: std.mem.Allocator, part: Part, input_name: []const u8) !usize {
+            const input_lines = try read_input(allocator, input_name);
+            defer free_input(allocator, input_lines);
+
+            return try do_run(allocator, part, input_lines);
+        }
+
+        pub fn read_input(allocator: std.mem.Allocator, input_name: []const u8) ![][]const u8 {
             const fileName = try std.fmt.allocPrint(allocator, "{s}_{s}", .{ input_prefix, input_name });
             defer allocator.free(fileName);
 
-            const input_lines = try readFileLines(allocator, fileName);
+            var input_lines = try readFileLines(allocator, fileName);
+            defer input_lines.deinit();
 
+            return try input_lines.toOwnedSlice();
+        }
+
+        pub fn free_input(allocator: std.mem.Allocator, input: [][]const u8) void {
             defer {
-                for (input_lines.items) |line| {
-                    allocator.free(line);
+                for (input) |i| {
+                    allocator.free(i);
                 }
-                input_lines.deinit();
+                allocator.free(input);
             }
-
-            return try do_run(allocator, part, input_lines.items);
         }
     };
 }
